@@ -37,7 +37,7 @@ mongoose.connect('mongodb://mago_user:Egy252@ds040948.mlab.com:40948/mago' ,{ us
 .catch(console.log);
 
 
-const port = 5000 || process.env.PORT ;
+const port =  process.env.PORT ;
 
 app.get('/api/test', (req, res) => res.send('Hello World!')) ;
 
