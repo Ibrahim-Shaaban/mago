@@ -32,7 +32,7 @@ require('./middleware/production')(app) ;
 
 
 // connect to database
-mongoose.connect('mongodb://localhost/mago' ,{ useNewUrlParser: true } )
+mongoose.connect('mongodb://mago_user:Egy252@ds040948.mlab.com:40948/mago' ,{ useNewUrlParser: true } )
 .then(() => console.log("connected to database")) 
 .catch(console.log);
 
