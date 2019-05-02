@@ -1,5 +1,6 @@
 const express = require('express') ;
 const app = express();
+const cors = require('cors');
 const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi); // add id validation to Joi
 const users = require('./routers/users');
@@ -18,13 +19,16 @@ if (!config.get('jwtPrivateKey')) {
     console.error('FATAL ERROR: jwtPrivateKey is not defined.');
     process.exit(1);
   }
+
 app.use(express.json()) ;
+app.use(cors()) ;
 app.use('/api/users' , users) ;
 app.use('/api/auth' , auth) ;
 app.use('/api/brands' , brands) ;
 app.use('/api/categories' , categories) ;
 app.use('/api/products' , products) ;
 app.use('/api/carts' ,carts) ;
+require('./middleware/production')(app) ;
 
 
 // connect to database
@@ -33,7 +37,7 @@ mongoose.connect('mongodb://localhost/mago' ,{ useNewUrlParser: true } )
 .catch(console.log);
 
 
-const port = 3000 || process.env.PORT ;
+const port = 5000 || process.env.PORT ;
 
 app.get('/api/test', (req, res) => res.send('Hello World!')) ;
 

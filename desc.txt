@@ -1,0 +1,520 @@
+# mago is website to sell electronics products like mobiles 
+# we have 5 resources 
+    1-users 
+    2-products
+    3-brands
+    4-categories
+    5-carts 
+
+# each resource has routes to make crud methods (post -put -get -delete)
+# in addition to specific route for authentication
+# 1- users : 
+    * to add user (register) :
+        -post request on "/api/users"
+        -request body : {
+            firstname: string ,
+            lastname: string ,
+            email: string,
+            password: string,
+            address : object{
+                street: string ,
+                city: string ,
+                state: string ,
+            } ,
+            isAdmin : boolean ,
+            phone : string
+        }
+        -response body : {
+            _id : string 
+            firstname: string ,
+            lastname: string ,
+            email: string,
+            address : object{
+                street: string ,
+                city: string ,
+                state: string ,
+            } ,
+            phone : string
+        }
+        -response header : {
+            x-authToken : jsonwebtoken(admin or user )
+        }
+
+    * to edit user  :
+        -put request on "/api/users/<user_id>"
+        -request body : {
+            firstname: string ,
+            lastname: string ,
+            email: string,
+            password: string,
+            address : object{
+                street: string ,
+                city: string ,
+                state: string ,
+            } ,
+            phone : string
+        }
+        - request header : {
+            x-authToken : jsonwebtoken(admin or user )
+        }
+        -response body : {
+            _id : string 
+            firstname: string ,
+            lastname: string ,
+            email: string,
+            address : object{
+                street: string ,
+                city: string ,
+                state: string ,
+            } ,
+            phone : string
+        }
+        -response header : {
+            x-authToken : jsonwebtoken
+        }
+
+    * to get user  :
+        - get request on "/api/users/<user_id>
+        request header : {
+            x-authToken : jsonwebtoken(admin or user )
+        } 
+        - response body: {
+            _id : string 
+            firstname: string ,
+            lastname: string ,
+            email: string,
+            address : object{
+                street: string ,
+                city: string ,
+                state: string ,
+            } ,
+            phone : string
+        }
+
+    * to get all users  :
+        - get request on "/api/users/
+        request header : {
+            x-authToken : jsonwebtoken(admin )
+        } 
+        - response body: [{
+            _id : string 
+            firstname: string ,
+            lastname: string ,
+            email: string,
+            address : object{
+                street: string ,
+                city: string ,
+                state: string ,
+            } ,
+            phone : string
+        }]
+
+    * to delete  user  :
+        - delete request on "/api/users/
+        request header : {
+            x-authToken : jsonwebtoken(admin )
+        } 
+        - response body: {
+            _id : string 
+            firstname: string ,
+            lastname: string ,
+            email: string,
+            address : object{
+                street: string ,
+                city: string ,
+                state: string ,
+            } ,
+            phone : string
+        }
+
+# for authentication (login) :
+    - post request on "/api/auth"
+    - request body : {
+        email : string 
+        password : string
+    }
+
+    - response body : {
+        jsonwebtoken (admin or user )
+    }
+
+############################################################################
+
+# 2 - brands like Samsung , Hp
+    * to add brand : 
+        - post request on "api/brands"
+        - request body : {
+            name : string
+        }
+        -request header : {
+            x-authToken : jsonwebtoken(admin)
+        }
+        -response body: {
+            _id : string ,
+            name : string
+        }
+
+    * to edit brand : 
+        - put request on "api/brands/<brand_id>"
+        - request body : {
+            name : string
+        }
+        -request header : {
+            x-authToken : jsonwebtoken(admin)
+        }
+        -response body: {
+            _id : string ,
+            name : string
+        }
+    
+    * to get specific brand : 
+        - get request on "api/brands/<brand_id>"
+        -response body: {
+            _id : string ,
+            name : string
+        }
+
+    * to get alll brands : 
+        - get request on "api/brands"
+        -response body: [{
+            _id : string ,
+            name : string
+        }]
+
+    * to delete brand : 
+        -delete request on "api/brands/<brand_id>"
+        
+        -request header : {
+            x-authToken : jsonwebtoken(admin)
+        }
+        -response body: {
+            _id : string ,
+            name : string
+        }
+
+#########################################################################
+
+# 3- categories :
+    * to add category
+        - post request on "api/categories"
+        - request body : {
+            name : string ,
+            brands : [
+                brand_id : string
+            ]
+        }
+        -request header : {
+            x-authToken : jsonwebtoken(admin)
+        }
+        -response body: {
+            _id : string ,
+            name : string ,
+            brands : [
+                {
+                    brand_id : string ,
+                    name : string
+                }
+            ]
+        }
+
+    * to edit category
+        - put request on "api/categories/<category_id>"
+        - request body : {
+            name : string ,
+            brands : [
+                brand_id : string
+            ]
+        }
+        -request header : {
+            x-authToken : jsonwebtoken(admin)
+        }
+        -response body: {
+            _id : string ,
+            name : string ,
+            brands : [
+                {
+                    brand_id : string ,
+                    name : string
+                }
+            ]
+        }
+
+    * to delete category
+        - delete request on "api/categories/<category_id>"
+        -request header : {
+            x-authToken : jsonwebtoken(admin)
+        }
+        -response body: {
+            _id : string ,
+            name : string ,
+            brands : [
+                {
+                    brand_id : string ,
+                    name : string
+                }
+            ]
+        }
+
+    * to get category
+        - get request on "api/categories/<category_id>"
+        -response body: {
+            _id : string ,
+            name : string ,
+            brands : [
+                {
+                    brand_id : string ,
+                    name : string
+                }
+            ]
+        }
+
+    * to get  all categories
+        - get request on "api/categories"
+        -response body: [{
+            _id : string ,
+            name : string ,
+            brands : [
+                {
+                    brand_id : string ,
+                    name : string
+                }
+            ]
+        }]
+
+##########################################################################
+
+# 4- products 
+    * to add product :
+        - post request on "api/products"
+        - request body : {
+            name: string,
+            price : number,
+            quantity : number ,
+            isFeatured : boolean ,
+            description : string,
+            categoryId : string,
+            brandId : string,
+        }
+        -request header : {
+            x-authToken : jsonwebtoken(admin)
+        }
+        -response body: {
+            _id : string ,
+            name: string,
+            price : number,
+            quantity : number ,
+            isFeatured : boolean ,
+            description : string,
+            categoryId : string,
+            brandId : string,
+        }
+
+    * to edit product :
+        - put request on "api/products/<product_id>"
+        - request body : {
+            name: string,
+            price : number,
+            quantity : number ,
+            isFeatured : boolean ,
+            description : string,
+            categoryId : string,
+            brandId : string,
+        }
+        -request header : {
+            x-authToken : jsonwebtoken(admin)
+        }
+        -response body: {
+            _id : string ,
+            name: string,
+            price : number,
+            quantity : number ,
+            isFeatured : boolean ,
+            description : string,
+            categoryId : string,
+            brandId : string,
+        }
+
+    * to delete product :
+        - delete request on "api/products/<product_id>"
+        -request header : {
+            x-authToken : jsonwebtoken(admin)
+        }
+        -response body: {
+            _id : string ,
+            name: string,
+            price : number,
+            quantity : number ,
+            isFeatured : boolean ,
+            description : string,
+            categoryId : string,
+            brandId : string,
+        }
+
+    * to get specific product :
+        - get request on "api/products/<product_id>"
+        -response body: {
+            _id : string ,
+            name: string,
+            price : number,
+            quantity : number ,
+            isFeatured : boolean ,
+            description : string,
+            categoryId : string,
+            brandId : string,
+        }
+
+    * to get all products :
+        - get request on "api/products"
+        -response body: [{
+            _id : string ,
+            name: string,
+            price : number,
+            quantity : number ,
+            isFeatured : boolean ,
+            description : string,
+            categoryId : string,
+            brandId : string,
+        }]
+
+
+##########################################################################
+
+# 5- carts
+    * to add cart:
+        - post request on "api/carts"
+        - request body : {
+            customerId: string,
+            products : [
+                {
+                productId :string,
+                quantityDemand: number
+            }
+            ]
+        }
+        -request header : {
+            x-authToken : jsonwebtoken(user)
+        }
+        -response body: {
+            _id : string ,
+            customer : {
+                _id : string ,
+                firstname : string ,
+                email : string ,
+                lastname : string ,
+            },
+            products : {
+                _id : string,
+                name : string,
+                price: string,
+                quantityDemand : number
+            },
+            totalAmount : number
+        }
+
+    * to edit cart:
+        - put request on "api/carts/<cart_id>"
+        - request body : {
+            products : [
+                {
+                productId :string,
+                quantityDemand: number
+            }
+            ]
+        }
+        -request header : {
+            x-authToken : jsonwebtoken(user)
+        }
+        -response body: {
+            _id : string ,
+            customer : {
+                _id : string ,
+                firstname : string ,
+                email : string ,
+                lastname : string ,
+            },
+            products : {
+                _id : string,
+                name : string,
+                price: string,
+                quantityDemand : number
+            },
+            totalAmount : number
+        }
+
+    * to delete cart:
+        - delete request on "api/carts/<cart_id>"
+        -request header : {
+            x-authToken : jsonwebtoken(user)
+        }
+        -response body: {
+            _id : string ,
+            customer : {
+                _id : string ,
+                firstname : string ,
+                email : string ,
+                lastname : string ,
+            },
+            products : {
+                _id : string,
+                name : string,
+                price: string,
+                quantityDemand : number
+            },
+            totalAmount : number
+        }
+
+    * to get specific cart:
+        - delete request on "api/carts/<cart_id>"
+        -request header : {
+            x-authToken : jsonwebtoken(user)
+        }
+        -response body: {
+            _id : string ,
+            customer : {
+                _id : string ,
+                firstname : string ,
+                email : string ,
+                lastname : string ,
+            },
+            products : {
+                _id : string,
+                name : string,
+                price: string,
+                quantityDemand : number
+            },
+            totalAmount : number
+        }
+
+    * to get all carts:
+        - delete request on "api/carts"
+        -request header : {
+            x-authToken : jsonwebtoken(admin)
+        }
+        -response body: [{
+            _id : string ,
+            customer : {
+                _id : string ,
+                firstname : string ,
+                email : string ,
+                lastname : string ,
+            },
+            products : {
+                _id : string,
+                name : string,
+                price: string,
+                quantityDemand : number
+            },
+            totalAmount : number
+        }]
+
+
+
+###########################################################################
+
+
+note : it's not the final api ....we will add photos and the shipping methods 
+
+
+
+
+
