@@ -1,3 +1,4 @@
 {
-    "jwtPrivateKey": "mago_jwtPrivateKey"
-  }
+  "jwtPrivateKey": "mago_jwtPrivateKey",
+  "dbUrl": "db_link"
+}
