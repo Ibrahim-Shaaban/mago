@@ -1,1 +1,0 @@
-mongodb://mago_user:Egy252@ds040948.mlab.com:40948/mago
